@@ -26,7 +26,7 @@ if (!is_numeric($device[0][id])) {
 	$rxBytes = $_GET[rx];
 } else {
 	// update last receiving data
-	$db->query("UPDATE devices SET last_check='".time()."', last_tx='".$_GET[tx]."', last_rx='".$_GET[rx]."'");
+	$db->query("UPDATE devices SET last_check='".time()."', last_tx='".$_GET[tx]."', last_rx='".$_GET[rx]."' WHERE id='".$device[0][id]."'");
 	// check last received value
 	// Если получили по счетчикам меньше трафика чем было, значит счетчик был сброшен.
 	if ($device[0][last_tx] > $_GET[tx]) {
