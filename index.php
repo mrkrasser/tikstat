@@ -39,19 +39,20 @@ $result = $db->arrayQuery("SELECT sn,comment FROM devices WHERE id='".$_GET[id].
 
 <?php
 	//Сегодня 
-	$today_result = $db->arrayQuery("SELECT sum(tx) as sumtx, sum(rx) as sumrx FROM traffic WHERE device_id='".$_GET[id]."' AND datetime>'".mktime(0,0,0)."' AND datetime<'".mktime(23,59,59)."' ORDER BY datetime DESC LIMIT 12", SQLITE_ASSOC);
+	$today_result = $db->arrayQuery("SELECT sum(tx) as sumtx, sum(rx) as sumrx FROM traffic WHERE device_id='".$_GET[id]."' AND datetime>='".mktime(0,0,0)."' AND datetime<'".mktime(23,59,59)."'", SQLITE_ASSOC);
+	//, sum(rx) as sumrx
 	echo 'Сегодня: ';
 	echo 'TX '.round(($today_result[0][sumtx]/1024/1024),2).' ';
 	echo 'RX '.round(($today_result[0][sumrx]/1024/1024),2).' ';
 	echo 'Total '.round((($today_result[0][sumtx]+$today_result[0][sumrx])/1024/1024),2).'Mb<br>';
 	//Эта неделя
-	$week_result = $db->arrayQuery("SELECT sum(tx) as sumtx, sum(rx) as sumrx FROM traffic WHERE device_id='".$_GET[id]."' AND datetime>'".strtotime(date('Y').'W'.date('W').'1')."' AND datetime<'".strtotime(date('Y').'W'.date('W').'7')."'", SQLITE_ASSOC);
+	$week_result = $db->arrayQuery("SELECT sum(tx) as sumtx, sum(rx) as sumrx FROM traffic WHERE device_id='".$_GET[id]."' AND datetime>='".strtotime(date('Y').'W'.date('W').'1')."' AND datetime<'".strtotime(date('Y').'W'.date('W').'7')."'", SQLITE_ASSOC);
 	echo 'Эта неделя: ';
 	echo 'TX '.round(($week_result[0][sumtx]/1024/1024),2).' ';
 	echo 'RX '.round(($week_result[0][sumrx]/1024/1024),2).' ';
 	echo 'Total '.round((($week_result[0][sumtx]+$week_result[0][sumrx])/1024/1024),2).'Mb<br>';
 	//Этот месяц
-	$month_result = $db->arrayQuery("SELECT sum(tx) as sumtx, sum(rx) as sumrx FROM traffic WHERE device_id='".$_GET[id]."' AND datetime>'".strtotime(date('Y-m-1'))."' AND datetime<'".strtotime(date('Y-m-t'))."'", SQLITE_ASSOC);
+	$month_result = $db->arrayQuery("SELECT sum(tx) as sumtx, sum(rx) as sumrx FROM traffic WHERE device_id='".$_GET[id]."' AND datetime>='".strtotime(date('Y-m-1'))."' AND datetime<'".strtotime(date('Y-m-t'))."'", SQLITE_ASSOC);
 	echo 'Этот месяц: ';
 	echo 'TX '.round(($month_result[0][sumtx]/1024/1024),2).' ';
 	echo 'RX '.round(($month_result[0][sumrx]/1024/1024),2).' ';
