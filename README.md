@@ -2,8 +2,8 @@
 
 ## why?
 - Very simple. Receive interface counters, parse on hours and save in SQLite database.
-- Work without public static ip. Router send data to script on hosting
-- Notify users about amount of traffic
+- Not need public static ip. Router send data to script on shared hosting.
+- Email-notify to users about amount of traffic
 
 ## how?
 1. Create mikrotik script 
